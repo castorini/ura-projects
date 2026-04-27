@@ -40,15 +40,30 @@
       <section class="control-section">
         <div class="section-row">
           <span class="control-label">Clusters</span>
-          <button type="button" class="text-button" id="clear-clusters">Show all</button>
+          <span class="button-group">
+            <button type="button" class="text-button" id="show-clusters">[show all]</button>
+            <button type="button" class="text-button" id="hide-clusters">[hide all]</button>
+          </span>
         </div>
         <div class="cluster-list" id="cluster-list"></div>
       </section>
     </aside>
 
+    <div class="resize-handle resize-handle-left" data-resize-panel="left" role="separator" aria-orientation="vertical" aria-label="Resize controls panel"></div>
+
     <section class="plot-region" aria-label="Citation visualization">
       <div id="plot"></div>
+      <div class="hover-card" id="hover-card" hidden>
+        <img id="hover-image" alt="" hidden>
+        <div>
+          <div class="hover-name" id="hover-name"></div>
+          <div class="hover-cluster" id="hover-cluster"></div>
+          <div class="hover-citation" id="hover-citation"></div>
+        </div>
+      </div>
     </section>
+
+    <div class="resize-handle resize-handle-right" data-resize-panel="right" role="separator" aria-orientation="vertical" aria-label="Resize details panel"></div>
 
     <aside class="details" aria-live="polite">
       <div class="empty-state" id="empty-state">
@@ -60,10 +75,11 @@
         <div class="profile-media" id="profile-media" hidden>
           <img id="profile-image" alt="">
         </div>
-        <p class="eyebrow" id="profile-cluster"></p>
         <h2 id="profile-name"></h2>
         <p id="profile-citation"></p>
         <dl>
+          <dt>Cluster</dt>
+          <dd id="profile-cluster"></dd>
           <dt>Keywords</dt>
           <dd id="profile-keywords"></dd>
         </dl>
