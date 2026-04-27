@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACM Fellows Citation Map</title>
+  <link rel="icon" href="assets/fav.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor-plotly.min.js"></script>
+  <script src="data/umap-data.js"></script>
+  <script src="data/tsne-data.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Issue #2</p>
+      <h1>ACM Fellows Citation Map</h1>
+    </div>
+    <div class="header-meta">
+      <span id="record-count">0 fellows</span>
+      <a href="https://github.com/lintool/cs-big-cows" target="_blank" rel="noreferrer">Data source</a>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="controls" aria-label="Visualization controls">
+      <section class="control-section">
+        <label class="control-label" for="projection">Projection</label>
+        <div class="segmented" id="projection" role="tablist" aria-label="Projection">
+          <button type="button" class="active" data-projection="umap">UMAP</button>
+          <button type="button" data-projection="tsne">t-SNE</button>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <label class="control-label" for="search">Search</label>
+        <input id="search" type="search" placeholder="Name, citation, keyword">
+      </section>
+
+      <section class="control-section">
+        <div class="section-row">
+          <span class="control-label">Clusters</span>
+          <button type="button" class="text-button" id="clear-clusters">Show all</button>
+        </div>
+        <div class="cluster-list" id="cluster-list"></div>
+      </section>
+    </aside>
+
+    <section class="plot-region" aria-label="Citation visualization">
+      <div id="plot"></div>
+    </section>
+
+    <aside class="details" aria-live="polite">
+      <div class="empty-state" id="empty-state">
+        <h2>Select a point</h2>
+        <p>Click a fellow to inspect the citation, cluster keywords, and profile links.</p>
+      </div>
+
+      <article class="profile" id="profile" hidden>
+        <div class="profile-media" id="profile-media" hidden>
+          <img id="profile-image" alt="">
+        </div>
+        <p class="eyebrow" id="profile-cluster"></p>
+        <h2 id="profile-name"></h2>
+        <p id="profile-citation"></p>
+        <dl>
+          <dt>Keywords</dt>
+          <dd id="profile-keywords"></dd>
+        </dl>
+        <div class="profile-links" id="profile-links"></div>
+      </article>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
