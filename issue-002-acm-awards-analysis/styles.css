@@ -8,6 +8,8 @@
   --accent-strong: #074f4a;
   --highlight: #d34a24;
   --shadow: 0 10px 28px rgba(24, 31, 35, 0.08);
+  --left-panel-width: 360px;
+  --right-panel-width: 320px;
 }
 
 * {
@@ -82,7 +84,7 @@ h2 {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 270px minmax(0, 1fr) 320px;
+  grid-template-columns: var(--left-panel-width) 8px minmax(0, 1fr) 8px var(--right-panel-width);
   min-height: calc(100vh - 82px);
 }
 
@@ -95,12 +97,43 @@ h2 {
 
 .controls {
   padding: 18px;
-  border-width: 0 1px 0 0;
+  border-width: 0;
 }
 
 .details {
   padding: 20px;
-  border-width: 0 0 0 1px;
+  border-width: 0;
+}
+
+.resize-handle {
+  position: relative;
+  z-index: 3;
+  cursor: col-resize;
+  background: linear-gradient(90deg, transparent 0, transparent 3px, var(--border) 3px, var(--border) 5px, transparent 5px);
+  touch-action: none;
+}
+
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 38px;
+  border-radius: 999px;
+  background: #bdb5a9;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+}
+
+.resize-handle:hover::after,
+.app-shell.resizing .resize-handle::after {
+  background: var(--accent);
+}
+
+body.resizing-panels {
+  cursor: col-resize;
+  user-select: none;
 }
 
 .control-section + .control-section {
@@ -174,6 +207,13 @@ input[type="search"] {
   font-weight: 700;
 }
 
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
 .cluster-list {
   display: grid;
   gap: 8px;
@@ -203,6 +243,7 @@ input[type="search"] {
 }
 
 .plot-region {
+  position: relative;
   min-width: 0;
   background: #fffaf2;
 }
@@ -211,6 +252,52 @@ input[type="search"] {
   width: 100%;
   height: calc(100vh - 82px);
   min-height: 560px;
+}
+
+.hover-card {
+  position: absolute;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  max-width: 420px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  text-align: left;
+}
+
+.hover-card img {
+  width: 72px;
+  height: 84px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.hover-name {
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.hover-cluster {
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.hover-citation {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .empty-state {
@@ -245,10 +332,16 @@ input[type="search"] {
 }
 
 .profile dt {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
   color: var(--text);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
+}
+
+.profile dt:not(:first-child) {
+  margin-top: 16px;
 }
 
 .profile dd {
@@ -280,7 +373,11 @@ input[type="search"] {
 
 @media (max-width: 1050px) {
   .app-shell {
-    grid-template-columns: 230px minmax(0, 1fr);
+    grid-template-columns: minmax(220px, 28%) minmax(0, 1fr);
+  }
+
+  .resize-handle {
+    display: none;
   }
 
   .details {
